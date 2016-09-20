@@ -13,7 +13,7 @@ import (
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "github-clone-all"
+	app.Name = "clone-org"
 	app.Usage = "Clone all repos of a github's user or organization"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
