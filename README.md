@@ -9,7 +9,7 @@ wasn't powerful enough to what I needed, so, here it is.
 
 ```
 NAME:
-   clone-org - Clone all repos of a github's user or organization
+   clone-org - Clone all repos of a github organization
 
 USAGE:
    main [global options] command [command options] [arguments...]
