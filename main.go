@@ -30,6 +30,9 @@ func main() {
 	app.Action = func(c *cli.Context) error {
 		client := client(c.String("token"))
 		org := c.String("org")
+		if org == "" {
+			return cli.NewExitError("Missing organization name", 1)
+		}
 		destination := c.String("destination")
 		if destination == "" {
 			destination = "/tmp/" + org
