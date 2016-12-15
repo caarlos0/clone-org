@@ -1,12 +1,14 @@
-hash: 72918f161cb9cedda1ecb4b60a6197f147e6d7a3ea6afea23537e950df228bd2
-updated: 2016-09-20T10:34:52.879418294-03:00
+hash: 55957cfbcf4f852bb66d88c9c23d40544e643256ceaad529a146465b0aff9e09
+updated: 2016-12-14T22:23:15.682365011-02:00
 imports:
+- name: github.com/caarlos0/spin
+  version: f1f63cceace559408b09577f25210edb9b2215c3
 - name: github.com/golang/protobuf
-  version: 1f49d83d9aa00e6ce4fc8258c71cc7786aec968a
+  version: df1d3ca07d2d07bba352d5b73c4313b4e2a6203e
   subpackages:
   - proto
 - name: github.com/google/go-github
-  version: 6d1b527d46849e8fc9238298ebe86dced178609c
+  version: 939928b912496ed4fbeb6e4beb2467b4fa540af7
   subpackages:
   - '...'
   - github
@@ -17,15 +19,15 @@ imports:
 - name: github.com/urfave/cli
   version: a14d7d367bc02b1f57d88de97926727f2d936387
 - name: golang.org/x/net
-  version: 71a035914f99bb58fe82eac0f1289f10963d876c
+  version: 6d3beaea10370160dea67f5c9327ed791afd5389
   subpackages:
   - context
 - name: golang.org/x/oauth2
-  version: 3c3a985cb79f52a3190fbc056984415ca6763d01
+  version: 1e695b1c8febf17aad3bfa7bf0a819ef94b98ad5
   subpackages:
   - internal
 - name: google.golang.org/appengine
-  version: 78199dcb0669fc381c22e919e1e97eba879e8f60
+  version: 3f4dbbc0ec153a39878fd524ece9f39732bd4998
   subpackages:
   - internal
   - internal/base

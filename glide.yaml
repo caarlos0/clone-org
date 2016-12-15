@@ -5,3 +5,5 @@ import:
   - '...'
 - package: github.com/urfave/cli
   version: ~1.18.1
+- package: github.com/caarlos0/spin
+  version: ~1.0.0
