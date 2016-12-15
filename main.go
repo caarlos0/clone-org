@@ -1,11 +1,12 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"os/exec"
 	"sync"
 
+	"github.com/caarlos0/spin"
 	"github.com/google/go-github/github"
 	"github.com/urfave/cli"
 	"golang.org/x/oauth2"
@@ -37,7 +38,10 @@ func main() {
 		if destination == "" {
 			destination = "/tmp/" + org
 		}
+		s := spin.New("%s Finding repositories to clone...")
+		s.Start()
 		repos, err := findRepos(org, client)
+		s.Stop()
 		if err != nil {
 			return cli.NewExitError(err.Error(), 1)
 		}
@@ -46,6 +50,11 @@ func main() {
 			return cli.NewExitError(err.Error(), 1)
 		}
 
+		s = spin.New(
+			fmt.Sprintf("%s Cloning %d repositories...", "%s", len(repos)),
+		)
+		s.Start()
+		defer s.Stop()
 		var wg sync.WaitGroup
 		wg.Add(len(repos))
 		for _, repo := range repos {
@@ -53,10 +62,9 @@ func main() {
 				name := *repo.Name
 				dest := destination + "/" + name
 				url := *repo.SSHURL
-				log.Println("Cloning", name, "into", dest)
 				cmd := exec.Command("git", "clone", "--depth", "1", url, dest)
 				if bts, err := cmd.CombinedOutput(); err != nil {
-					log.Println("git clone failed for", url, string(bts))
+					fmt.Printf("\ngit clone failed for %s: %s", url, string(bts))
 				}
 				wg.Done()
 			}(repo)
