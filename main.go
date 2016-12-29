@@ -12,10 +12,13 @@ import (
 	"golang.org/x/oauth2"
 )
 
+var version = "master"
+
 func main() {
 	app := cli.NewApp()
 	app.Name = "clone-org"
 	app.Usage = "Clone all repos of a github organization"
+	app.Version = version
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name: "org, o",
