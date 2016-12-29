@@ -1,5 +1,5 @@
 language: go
-go: 1.7.1
+go: 1.7.4
 install:
   - go get github.com/Masterminds/glide
   - glide install
