@@ -1,4 +1,4 @@
-# clone-org
+# clone-org [![Build Status](https://travis-ci.org/caarlos0/clone-org.svg?branch=master)](https://travis-ci.org/caarlos0/clone-org) [![Powered By: GoReleaser](https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=flat-square)](https://github.com/goreleaser)
 
 A simple command line tool to clone all repos of a given organization.
 
