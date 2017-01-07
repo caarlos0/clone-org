@@ -3,7 +3,7 @@
 A simple command line tool to clone all repos of a given organization.
 
 I needed to do that so I can `grep` all repos for some stuff. GitHub search
-wasn't powerful enough to what I needed, so, here it is.
+wasn't powerful enough to do what I needed, so, here it is.
 
 ## Usage
 
