@@ -5,6 +5,12 @@ A simple command line tool to clone all repos of a given organization.
 I needed to do that so I can `grep` all repos for some stuff. GitHub search
 wasn't powerful enough to do what I needed, so, here it is.
 
+## Install
+
+```sh
+brew install caarlos0/tap/clone-org
+```
+
 ## Usage
 
 ```
