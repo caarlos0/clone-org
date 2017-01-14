@@ -2,4 +2,4 @@ repo: caarlos0/clone-org
 binary_name: clone-org
 brew:
   repo: caarlos0/homebrew-tap
-  folder: Fomula
+  folder: Formula
