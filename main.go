@@ -1,4 +1,4 @@
-// Package cloneorg contains usefull functions to find and clone a github
+// Package cloneorg contains useful functions to find and clone a github
 // organization repositories.
 package cloneorg
 
