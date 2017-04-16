@@ -1,10 +1,10 @@
 language: go
-go: 1.7.4
-install:
-  - go get github.com/Masterminds/glide
-  - glide install
-script: go test -cover `glide nv`
+go: 1.8
+install: make setup
+script: make ci
 after_success:
-  test -n "$TRAVIS_TAG" && curl -sL https://git.io/goreleaser | bash
+  # - go get github.com/mattn/goveralls
+  # - goveralls -coverprofile=coverage.out -service=travis-ci -repotoken="$COVERALLS_TOKEN"
+  - test -n "$TRAVIS_TAG" && curl -sL http://git.io/goreleaser | bash
 notifications:
   email: false
