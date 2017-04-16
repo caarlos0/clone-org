@@ -1,19 +1,19 @@
-hash: 55957cfbcf4f852bb66d88c9c23d40544e643256ceaad529a146465b0aff9e09
-updated: 2016-12-14T22:23:15.682365011-02:00
+hash: d631986b300aa6f11f6dc4f94f4d0a20dac90e83b61bdbced80c3351c0cf3abb
+updated: 2017-04-16T12:04:41.79455994-03:00
 imports:
 - name: github.com/caarlos0/spin
   version: f1f63cceace559408b09577f25210edb9b2215c3
 - name: github.com/golang/protobuf
-  version: df1d3ca07d2d07bba352d5b73c4313b4e2a6203e
+  version: 2bba0603135d7d7f5cb73b2125beeda19c09f4ef
   subpackages:
   - proto
 - name: github.com/google/go-github
-  version: 939928b912496ed4fbeb6e4beb2467b4fa540af7
+  version: de33c46a823d3f723514fc5333b75ef2e937b7df
   subpackages:
   - '...'
   - github
 - name: github.com/google/go-querystring
-  version: 9235644dd9e52eeae6fa48efd539fdc351a0af53
+  version: 53e6ce116135b80d037921a7fdd5138cf32d7a8a
   subpackages:
   - query
 - name: github.com/urfave/cli
@@ -23,16 +23,22 @@ imports:
   subpackages:
   - context
 - name: golang.org/x/oauth2
-  version: 1e695b1c8febf17aad3bfa7bf0a819ef94b98ad5
+  version: a6bd8cefa1811bd24b86f8902872e4e8225f74c4
   subpackages:
   - internal
+- name: golang.org/x/sync
+  version: 316e794f7b5e3df4e95175a45a5fb8b12f85cb4f
+  subpackages:
+  - errgroup
 - name: google.golang.org/appengine
-  version: 3f4dbbc0ec153a39878fd524ece9f39732bd4998
+  version: 170382fa85b10b94728989dfcf6cc818b335c952
   subpackages:
   - internal
+  - internal/app_identity
   - internal/base
   - internal/datastore
   - internal/log
+  - internal/modules
   - internal/remote_api
   - internal/urlfetch
   - urlfetch
