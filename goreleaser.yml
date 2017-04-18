@@ -1,5 +1,5 @@
 build:
-  main: ./cmd/main/main.go
+  main: ./cmd/clone-org/main.go
   goarch:
     - amd64
 brew:
