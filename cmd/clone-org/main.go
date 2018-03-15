@@ -32,20 +32,23 @@ func main() {
 		},
 	}
 	app.Action = func(c *cli.Context) error {
-		var token = c.String("token")
-		var org = c.String("org")
+		token := c.String("token")
 		if token == "" {
 			return cli.NewExitError("missing github token", 1)
 		}
+
+		org := c.String("org")
 		if org == "" {
 			return cli.NewExitError("missing organization name", 1)
 		}
+
 		destination := c.String("destination")
 		if destination == "" {
 			destination = filepath.Join(os.TempDir(), org)
 		}
 		fmt.Printf("Destination: %v\n", destination)
-		var s = spin.New("%s Finding repositories to clone...")
+
+		s := spin.New("%s Finding repositories to clone...")
 		s.Start()
 		repos, err := cloneorg.AllOrgRepos(token, org)
 		s.Stop()
