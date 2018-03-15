@@ -56,7 +56,7 @@ func main() {
 			return cli.NewExitError(err.Error(), 1)
 		}
 
-		if err := os.Mkdir(destination, 0700); err != nil {
+		if err := cloneorg.CreateDir(destination); err != nil {
 			return cli.NewExitError(err.Error(), 1)
 		}
 

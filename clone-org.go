@@ -5,6 +5,7 @@ package cloneorg
 import (
 	"context"
 	"fmt"
+	"os"
 	"os/exec"
 	"path/filepath"
 
@@ -66,4 +67,25 @@ func findRepos(ctx context.Context, client *github.Client, org string) (result [
 		opt.ListOptions.Page = resp.NextPage
 	}
 	return result, nil
+}
+
+// CreateDir creates the directory if it does not exists
+func CreateDir(directory string) error {
+	stat, err := os.Stat(directory)
+	directoryDoesNotExists := err != nil
+
+	if directoryDoesNotExists {
+		err := os.MkdirAll(directory, 0700)
+		if err != nil {
+			return fmt.Errorf("couldn't create directory: %v", err)
+		}
+
+		return nil
+	}
+
+	if stat.IsDir() {
+		return nil
+	}
+
+	return fmt.Errorf("directory provided is a file: %v", directory)
 }
