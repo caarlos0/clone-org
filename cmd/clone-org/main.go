@@ -60,16 +60,18 @@ func main() {
 			return cli.NewExitError(err.Error(), 1)
 		}
 
-		s = spin.New(fmt.Sprintf(
-			"%v Cloning %v repositories...", "%v", len(repos),
-		))
-		s.Start()
-		defer s.Stop()
+		fmt.Printf("Cloning %v repositories:\n", len(repos))
 		var g errgroup.Group
 		for _, repo := range repos {
 			repo := repo
 			g.Go(func() error {
-				return cloneorg.Clone(repo, destination)
+				err := cloneorg.Clone(repo, destination)
+				if err != nil {
+					fmt.Printf("\033[33m[failed] %s\033[0m: %s", repo.Name, err)
+				} else {
+					fmt.Printf("\033[32m[cloned] %s\033[0m\n", repo.Name)
+				}
+				return nil
 			})
 		}
 		return g.Wait()
