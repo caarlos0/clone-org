@@ -1,47 +1,61 @@
-SOURCE_FILES?=$$(go list ./... | grep -v /vendor/)
+SOURCE_FILES?=./...
 TEST_PATTERN?=.
 TEST_OPTIONS?=
 
-setup: ## Install all the build and lint dependencies
-	go get -u github.com/alecthomas/gometalinter
-	go get github.com/Masterminds/glide
-	go get -u github.com/pierrre/gotestcover
-	go get -u golang.org/x/tools/cmd/cover
-	glide install
-	gometalinter --install --update
+export PATH := ./bin:$(PATH)
+export GO111MODULE := on
+# enable consistent Go 1.12/1.13 GOPROXY behavior.
+export GOPROXY := https://proxy.golang.org,https://gocenter.io,direct
 
-test: ## Run all the tests
-	gotestcover $(TEST_OPTIONS) -covermode=count -coverprofile=coverage.out $(SOURCE_FILES) -run $(TEST_PATTERN) -timeout=30s
+# Install all the build and lint dependencies
+setup:
+	curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh
+	go mod tidy
+.PHONY: setup
 
-cover: test ## RUn all the tests and opens the coverage report
-	go tool cover -html=coverage.out
+# Run all the tests
+test:
+	go test $(TEST_OPTIONS) -failfast -race -coverpkg=./... -covermode=atomic -coverprofile=coverage.txt $(SOURCE_FILES) -run $(TEST_PATTERN) -timeout=2m
+.PHONY: test
 
-fmt: ## gofmt and goimports all go files
+# Run all the tests and opens the coverage report
+cover: test
+	go tool cover -html=coverage.txt
+.PHONY: cover
+
+# gofmt and goimports all go files
+fmt:
 	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofmt -w -s "$$file"; goimports -w "$$file"; done
+.PHONY: fmt
 
-lint: ## Run all the linters
-	gometalinter --vendor --disable-all \
-		--enable=deadcode \
-		--enable=ineffassign \
-		--enable=gosimple \
-		--enable=staticcheck \
-		--enable=gofmt \
-		--enable=goimports \
-		--enable=dupl \
-		--enable=misspell \
-		--enable=errcheck \
-		--enable=vet \
-		--enable=vetshadow \
-		--deadline=10m \
-		./...
+# Run all the linters
+lint:
+	# TODO: fix tests issues
+	# TODO: fix lll issues
+	# TODO: fix funlen issues
+	# TODO: fix godox issues
+	# TODO: fix wsl issues
+	./bin/golangci-lint run ./...
+.PHONY: lint
 
-ci: lint test ## Run all the tests and code checks
+# Run all the tests and code checks
+ci: build test lint
+.PHONY: ci
 
-build: ## Build a beta version of releaser
-	go build -o clone-org ./cmd/clone-org/main.go
+# Build a beta version of goreleaser
+build:
+	go build
+.PHONY: build
 
-# Absolutely awesome: http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
-help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+# Show to-do items per file.
+todo:
+	@grep \
+		--exclude-dir=vendor \
+		--exclude-dir=node_modules \
+		--exclude=Makefile \
+		--text \
+		--color \
+		-nRo -E ' TODO:.*|SkipNow' .
+.PHONY: todo
 
 .DEFAULT_GOAL := build

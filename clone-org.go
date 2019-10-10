@@ -9,7 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/google/go-github/github"
+	"github.com/google/go-github/v28/github"
 	"golang.org/x/oauth2"
 )
 
@@ -21,6 +21,7 @@ type Repo struct {
 
 // Clone a given repository into a given destination
 func Clone(repo Repo, destination string) error {
+	// nolint: gosec
 	var cmd = exec.Command(
 		"git", "clone", "--depth", "1", repo.URL,
 		filepath.Join(destination, repo.Name),
