@@ -5,11 +5,5 @@ install: make setup
 script: make ci
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-deploy:
-  - provider: script
-    skip_cleanup: true
-    script: ./goreleaser
-    on:
-      tags: true
 notifications:
   email: false
