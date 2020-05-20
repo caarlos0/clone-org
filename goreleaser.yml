@@ -2,8 +2,8 @@ build:
   main: ./cmd/clone-org/main.go
   goarch:
     - amd64
-brew:
-  github:
-    owner: caarlos0
-    name: homebrew-tap
+brews:
+  - github:
+      owner: caarlos0
+      name: homebrew-tap
   folder: Formula
