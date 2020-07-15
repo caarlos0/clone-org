@@ -4,6 +4,7 @@ package cloneorg
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -19,7 +20,13 @@ type Repo struct {
 	URL  string
 }
 
-// Clone a given repository into a given destination
+// ErrClone happens when a git clone fails.
+var ErrClone = errors.New("git clone failed")
+
+// ErrCreateDir happens when we fail to create the target directory.
+var ErrCreateDir = errors.New("failed to create directory")
+
+// Clone a given repository into a given destination.
 func Clone(repo Repo, destination string) error {
 	// nolint: gosec
 	var cmd = exec.Command(
@@ -27,12 +34,12 @@ func Clone(repo Repo, destination string) error {
 		filepath.Join(destination, repo.Name),
 	)
 	if bts, err := cmd.CombinedOutput(); err != nil {
-		return fmt.Errorf("git clone failed for %v: %v", repo.Name, string(bts))
+		return fmt.Errorf("%w: %v: %v", ErrClone, repo.Name, string(bts))
 	}
 	return nil
 }
 
-// AllOrgRepos finds all repositories of a given organization
+// AllOrgRepos finds all repositories of a given organization.
 func AllOrgRepos(token, org string) (repos []Repo, err error) {
 	var ctx = context.Background()
 	var client = github.NewClient(oauth2.NewClient(
@@ -52,9 +59,11 @@ func AllOrgRepos(token, org string) (repos []Repo, err error) {
 	return
 }
 
+const pageSize = 30
+
 func findRepos(ctx context.Context, client *github.Client, org string) (result []*github.Repository, err error) {
 	opt := &github.RepositoryListByOrgOptions{
-		ListOptions: github.ListOptions{PerPage: 30},
+		ListOptions: github.ListOptions{PerPage: pageSize},
 	}
 	for {
 		repos, resp, err := client.Repositories.ListByOrg(ctx, org, opt)
@@ -70,7 +79,7 @@ func findRepos(ctx context.Context, client *github.Client, org string) (result [
 	return result, nil
 }
 
-// CreateDir creates the directory if it does not exists
+// CreateDir creates the directory if it does not exists.
 func CreateDir(directory string) error {
 	stat, err := os.Stat(directory)
 	directoryDoesNotExists := err != nil
@@ -78,7 +87,7 @@ func CreateDir(directory string) error {
 	if directoryDoesNotExists {
 		err := os.MkdirAll(directory, 0700)
 		if err != nil {
-			return fmt.Errorf("couldn't create directory: %v", err)
+			return fmt.Errorf("%w: %s: %s", ErrCreateDir, directory, err.Error())
 		}
 
 		return nil
@@ -88,5 +97,5 @@ func CreateDir(directory string) error {
 		return nil
 	}
 
-	return fmt.Errorf("directory provided is a file: %v", directory)
+	return fmt.Errorf("%w: %s is a file", ErrCreateDir, directory)
 }
