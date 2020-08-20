@@ -5,11 +5,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"golang.org/x/sync/errgroup"
-
 	cloneorg "github.com/caarlos0/clone-org"
 	"github.com/caarlos0/spin"
 	"github.com/urfave/cli"
+	"golang.org/x/sync/errgroup"
 )
 
 var version = "master"
