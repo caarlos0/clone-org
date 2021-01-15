@@ -1,9 +1,20 @@
-build:
-  main: ./cmd/clone-org/main.go
+builds:
+- main: ./cmd/clone-org/main.go
   goarch:
-    - amd64
+  - amd64
+  - arm64
 brews:
 - tap:
     owner: caarlos0
     name: homebrew-tap
+  homepage:  https://github.com/caarlos0/clone-org
+  description: Clone all repos of a GitHub user or organization.
   folder: Formula
+nfpms:
+- maintainer: Carlos A Becker <pkg@carlosbecker.com>
+  description: Clone all repos of a GitHub user or organization.
+  license: MIT
+  formats:
+  - deb
+  - rpm
+  - apk

@@ -1,6 +1,6 @@
 module github.com/caarlos0/clone-org
 
-go 1.14
+go 1.15
 
 require (
 	github.com/caarlos0/spin v1.1.0
