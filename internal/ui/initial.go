@@ -9,7 +9,7 @@ import (
 // NewInitialModel creates a new InitialModel with required fields.
 func NewInitialModel(token, org, destination string) tea.Model {
 	var s = spinner.NewModel()
-	s.Spinner = spinner.MiniDot
+	s.Spinner = spinner.Jump
 
 	return initialModel{
 		token:       token,

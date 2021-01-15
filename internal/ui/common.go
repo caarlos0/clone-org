@@ -14,21 +14,12 @@ var (
 	red       = termenv.ColorProfile().Color("#ED567A")
 )
 
-const (
-	iconSelected    = "●"
-	iconNotSelected = "○"
-)
-
 func boldPrimaryForeground(s string) string {
 	return termenv.String(s).Foreground(primary).Bold().String()
 }
 
 func boldSecondaryForeground(s string) string {
 	return termenv.String(s).Foreground(secondary).Bold().String()
-}
-
-func boldRedForeground(s string) string {
-	return termenv.String(s).Foreground(red).Bold().String()
 }
 
 func redForeground(s string) string {

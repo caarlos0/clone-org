@@ -65,5 +65,5 @@ func (m cloneModel) View() string {
 		s += r.View() + "\n"
 	}
 
-	return s + "\n" + singleOptionHelp("q/esc", "quit")
+	return s + singleOptionHelp("q/esc", "quit")
 }
