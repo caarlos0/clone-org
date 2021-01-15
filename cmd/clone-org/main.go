@@ -1,14 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 
-	cloneorg "github.com/caarlos0/clone-org"
-	"github.com/caarlos0/spin"
+	"github.com/caarlos0/clone-org/internal/ui"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/urfave/cli"
-	"golang.org/x/sync/errgroup"
 )
 
 var version = "master"
@@ -31,6 +30,13 @@ func main() {
 		},
 	}
 	app.Action = func(c *cli.Context) error {
+		log.SetFlags(0)
+		f, err := tea.LogToFile("clone-org.log", "")
+		if err != nil {
+			return cli.NewExitError(err.Error(), 1)
+		}
+		defer func() { _ = f.Close() }()
+
 		token := c.String("token")
 		if token == "" {
 			return cli.NewExitError("missing github token", 1)
@@ -45,35 +51,14 @@ func main() {
 		if destination == "" {
 			destination = filepath.Join(os.TempDir(), org)
 		}
-		fmt.Printf("Destination: %v\n", destination)
 
-		s := spin.New("%s Finding repositories to clone...")
-		s.Start()
-		repos, err := cloneorg.AllOrgRepos(token, org)
-		s.Stop()
-		if err != nil {
+		var p = tea.NewProgram(ui.NewInitialModel(token, org, destination))
+		p.EnterAltScreen()
+		defer p.ExitAltScreen()
+		if err = p.Start(); err != nil {
 			return cli.NewExitError(err.Error(), 1)
 		}
-
-		if err := cloneorg.CreateDir(destination); err != nil {
-			return cli.NewExitError(err.Error(), 1)
-		}
-
-		fmt.Printf("Cloning %v repositories:\n", len(repos))
-		var g errgroup.Group
-		for _, repo := range repos {
-			repo := repo
-			g.Go(func() error {
-				err := cloneorg.Clone(repo, destination)
-				if err != nil {
-					fmt.Printf("\033[33m[failed] %s\033[0m: %s", repo.Name, err)
-				} else {
-					fmt.Printf("\033[32m[cloned] %s\033[0m\n", repo.Name)
-				}
-				return nil
-			})
-		}
-		return g.Wait()
+		return nil
 	}
 	if err := app.Run(os.Args); err != nil {
 		panic(err)
