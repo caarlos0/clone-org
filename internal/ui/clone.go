@@ -42,6 +42,9 @@ func (m cloneModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		}
 	}
+	if m.done {
+		return m, nil
+	}
 	var cmds []tea.Cmd
 	var cmd tea.Cmd
 	m.done = true
