@@ -33,11 +33,15 @@ func (m repoModel) Init() tea.Cmd {
 
 func (m repoModel) Update(msg tea.Msg) (repoModel, tea.Cmd) {
 	switch msg := msg.(type) {
-	case errMsg:
-		m.cloning = false
-		m.err = msg.error
+	case repoCloneErrMsg:
+		if msg.name == m.repo.Name {
+			m.cloning = false
+			m.err = msg.error
+		}
 	case repoClonedMsg:
-		m.cloning = false
+		if msg.name == m.repo.Name {
+			m.cloning = false
+		}
 	default:
 		var cmd tea.Cmd
 		m.spinner, cmd = m.spinner.Update(msg)
@@ -58,13 +62,20 @@ func (m repoModel) View() string {
 
 // msgs and cmds
 
-type repoClonedMsg struct{}
+type repoClonedMsg struct{
+	name string
+}
+
+type repoCloneErrMsg struct {
+	error
+	name string
+}
 
 func cloneRepoCmd(repo cloneorg.Repo, destination string) tea.Cmd {
 	return func() tea.Msg {
 		if err := cloneorg.Clone(repo, destination); err != nil {
-			return errMsg{err}
+			return repoCloneErrMsg{err, repo.Name}
 		}
-		return repoClonedMsg{}
+		return repoClonedMsg{repo.Name}
 	}
 }
