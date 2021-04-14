@@ -3,7 +3,7 @@ module github.com/caarlos0/clone-org
 go 1.15
 
 require (
-	github.com/charmbracelet/bubbles v0.7.6
+	github.com/charmbracelet/bubbles v0.7.7
 	github.com/charmbracelet/bubbletea v0.13.2
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
