@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"log"
 	"strings"
 
 	cloneorg "github.com/caarlos0/clone-org"
@@ -9,7 +10,7 @@ import (
 )
 
 func newRepoView(repo cloneorg.Repo, destination string) repoModel {
-	var s = spinner.NewModel()
+	s := spinner.NewModel()
 	s.Spinner = spinner.Points
 	return repoModel{
 		repo:        repo,
@@ -37,10 +38,12 @@ func (m repoModel) Update(msg tea.Msg) (repoModel, tea.Cmd) {
 		if msg.name == m.repo.Name {
 			m.cloning = false
 			m.err = msg.error
+			log.Println("failed to clone", m.repo.Name, m.err)
 		}
 	case repoClonedMsg:
 		if msg.name == m.repo.Name {
 			m.cloning = false
+			log.Println("cloned", m.repo.Name)
 		}
 	default:
 		var cmd tea.Cmd
@@ -62,7 +65,7 @@ func (m repoModel) View() string {
 
 // msgs and cmds
 
-type repoClonedMsg struct{
+type repoClonedMsg struct {
 	name string
 }
 

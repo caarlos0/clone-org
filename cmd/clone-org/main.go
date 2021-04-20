@@ -1,12 +1,14 @@
 package main
 
 import (
+	"io"
 	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/caarlos0/clone-org/internal/ui"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/mattn/go-isatty"
 	"github.com/urfave/cli"
 )
 
@@ -20,13 +22,20 @@ func main() {
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name: "org, o",
+			Usage: "organization to clone",
 		},
 		cli.StringFlag{
 			Name:   "token, t",
 			EnvVar: "GITHUB_TOKEN",
+			Usage: "github token to use to authenticate and gather the repository list",
 		},
 		cli.StringFlag{
 			Name: "destination, d",
+			Usage: "path to clone the repositories into",
+		},
+		cli.BoolFlag{
+			Name: "no-tui",
+			Usage: "disable the TUI and use plain text output only",
 		},
 	}
 	app.Action = func(c *cli.Context) error {
@@ -47,9 +56,19 @@ func main() {
 			destination = filepath.Join(os.TempDir(), org)
 		}
 
-		var p = tea.NewProgram(ui.NewInitialModel(token, org, destination))
-		p.EnterAltScreen()
-		defer p.ExitAltScreen()
+		var opts []tea.ProgramOption
+		isTUI := isatty.IsTerminal(os.Stdout.Fd()) && !c.Bool("no-tui")
+		if isTUI {
+			log.SetOutput(io.Discard)
+		} else {
+			opts = []tea.ProgramOption{tea.WithoutRenderer()}
+		}
+
+		p := tea.NewProgram(ui.NewInitialModel(token, org, destination,isTUI) , opts...)
+		if isTUI {
+			p.EnterAltScreen()
+			defer p.ExitAltScreen()
+		}
 		if err := p.Start(); err != nil {
 			return cli.NewExitError(err.Error(), 1)
 		}

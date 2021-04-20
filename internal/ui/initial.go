@@ -1,14 +1,16 @@
 package ui
 
 import (
+	"log"
+
 	cloneorg "github.com/caarlos0/clone-org"
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
 // NewInitialModel creates a new InitialModel with required fields.
-func NewInitialModel(token, org, destination string) tea.Model {
-	var s = spinner.NewModel()
+func NewInitialModel(token, org, destination string, tui bool) tea.Model {
+	s := spinner.NewModel()
 	s.Spinner = spinner.Jump
 
 	return initialModel{
@@ -17,6 +19,7 @@ func NewInitialModel(token, org, destination string) tea.Model {
 		destination: destination,
 		spinner:     s,
 		loading:     true,
+		tui:         tui,
 	}
 }
 
@@ -28,6 +31,7 @@ type initialModel struct {
 	org         string
 	destination string
 	loading     bool
+	tui         bool
 }
 
 func (m initialModel) Init() tea.Cmd {
@@ -41,7 +45,7 @@ func (m initialModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.err = msg.error
 		return m, nil
 	case gotRepoListMsg:
-		var list = newCloneModel(msg.repos, m.destination)
+		list := newCloneModel(msg.repos, m.destination, m.tui)
 		return list, list.Init()
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -74,6 +78,7 @@ type gotRepoListMsg struct {
 
 func getReposCmd(token, org, destination string) tea.Cmd {
 	return func() tea.Msg {
+		log.Println("gathering repositories...")
 		repos, err := cloneorg.AllOrgRepos(token, org)
 		if err != nil {
 			return errMsg{err}

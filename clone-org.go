@@ -29,7 +29,7 @@ var ErrCreateDir = errors.New("failed to create directory")
 // Clone a given repository into a given destination.
 func Clone(repo Repo, destination string) error {
 	// nolint: gosec
-	var cmd = exec.Command(
+	cmd := exec.Command(
 		"git", "clone", "--depth", "1", repo.URL,
 		filepath.Join(destination, repo.Name),
 	)
@@ -41,8 +41,8 @@ func Clone(repo Repo, destination string) error {
 
 // AllOrgRepos finds all repositories of a given organization.
 func AllOrgRepos(token, org string) (repos []Repo, err error) {
-	var ctx = context.Background()
-	var client = github.NewClient(oauth2.NewClient(
+	ctx := context.Background()
+	client := github.NewClient(oauth2.NewClient(
 		ctx,
 		oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token}),
 	))
@@ -85,7 +85,7 @@ func CreateDir(directory string) error {
 	directoryDoesNotExists := err != nil
 
 	if directoryDoesNotExists {
-		err := os.MkdirAll(directory, 0700)
+		err := os.MkdirAll(directory, 0o700)
 		if err != nil {
 			return fmt.Errorf("%w: %s: %s", ErrCreateDir, directory, err.Error())
 		}
