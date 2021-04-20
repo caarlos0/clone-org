@@ -1,5 +1,7 @@
+gomod:
+  proxy: true
 builds:
-- main: ./cmd/clone-org/main.go
+- main: ./cmd/clone-org
   goarch:
   - amd64
   - arm64

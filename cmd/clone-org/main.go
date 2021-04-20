@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
 	"path/filepath"
+	"runtime/debug"
 
 	"github.com/caarlos0/clone-org/internal/ui"
 	tea "github.com/charmbracelet/bubbletea"
@@ -12,29 +14,33 @@ import (
 	"github.com/urfave/cli"
 )
 
-var version = "master"
+var version = "devel"
 
 func main() {
+	if info, ok := debug.ReadBuildInfo(); ok && info.Main.Sum != "" {
+		version = fmt.Sprintf("%s, checksum %s", info.Main.Version, info.Main.Sum)
+	}
+
 	app := cli.NewApp()
 	app.Name = "clone-org"
 	app.Usage = "Clone all repos of a github organization"
 	app.Version = version
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name: "org, o",
+			Name:  "org, o",
 			Usage: "organization to clone",
 		},
 		cli.StringFlag{
 			Name:   "token, t",
 			EnvVar: "GITHUB_TOKEN",
-			Usage: "github token to use to authenticate and gather the repository list",
+			Usage:  "github token to use to authenticate and gather the repository list",
 		},
 		cli.StringFlag{
-			Name: "destination, d",
+			Name:  "destination, d",
 			Usage: "path to clone the repositories into",
 		},
 		cli.BoolFlag{
-			Name: "no-tui",
+			Name:  "no-tui",
 			Usage: "disable the TUI and use plain text output only",
 		},
 	}
@@ -64,7 +70,7 @@ func main() {
 			opts = []tea.ProgramOption{tea.WithoutRenderer()}
 		}
 
-		p := tea.NewProgram(ui.NewInitialModel(token, org, destination,isTUI) , opts...)
+		p := tea.NewProgram(ui.NewInitialModel(token, org, destination, isTUI), opts...)
 		if isTUI {
 			p.EnterAltScreen()
 			defer p.ExitAltScreen()
