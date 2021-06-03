@@ -3,11 +3,12 @@ module github.com/caarlos0/clone-org
 go 1.16
 
 require (
-	github.com/charmbracelet/bubbles v0.7.9
+	github.com/charmbracelet/bubbles v0.8.0
 	github.com/charmbracelet/bubbletea v0.13.2
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/google/go-github/v32 v32.1.0
+	github.com/mattn/go-isatty v0.0.12
 	github.com/muesli/termenv v0.8.1
 	github.com/urfave/cli v1.22.5
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381 // indirect
