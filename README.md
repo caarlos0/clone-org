@@ -16,12 +16,6 @@ A simple command line tool to clone all repos of a given organization.
 I needed to do that so I can `grep` all repos for some stuff. GitHub search
 wasn't powerful enough to do what I needed, so, here it is.
 
-## Install
-
-```sh
-brew install caarlos0/tap/clone-org
-```
-
 ## Usage
 
 ```
@@ -52,3 +46,52 @@ GLOBAL OPTIONS:
 * a `git clone --depth 1` will be performed, meaning that only the last commit
 of the default branch will be available. On future versions this may be
 configurable.
+
+
+## Install
+
+**homebrew**:
+
+```sh
+brew install caarlos0/tap/clone-org
+```
+
+**snap**:
+
+```sh
+snap install clone-org
+```
+
+**apt**:
+
+```sh
+echo 'deb [trusted=yes] https://repo.caarlos0.dev/apt/ /' | sudo tee /etc/apt/sources.list.d/caarlos0.list
+sudo apt update
+sudo apt install clone-org
+```
+
+**yum**:
+
+```sh
+echo '[caarlos0]
+name=caarlos0
+baseurl=https://repo.caarlos0.dev/yum/
+enabled=1
+gpgcheck=0' | sudo tee /etc/yum.repos.d/caarlos0.repo
+sudo yum install clone-org
+```
+
+**deb/rpm/apk**:
+
+Download the `.apk`, `.deb` or `.rpm` from the [releases page][releases] and install with the appropriate commands.
+
+**manually**:
+
+Download the pre-compiled binaries from the [releases page][releases] or clone the repo build from source.
+
+[releases]: https://github.com/caarlos0/clone-org/releases
+
+
+## Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/caarlos0/clone-org.svg)](https://starchart.cc/caarlos0/clone-org)
