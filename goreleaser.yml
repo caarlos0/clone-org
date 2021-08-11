@@ -1,22 +1,18 @@
-gomod:
-  proxy: true
+variables:
+  homepage: https://github.com/caarlos0/clone-org
+  repository: https://github.com/caarlos0/clone-org
+  description: Clone all repos of a GitHub user or organization
+
+includes:
+  - from_url:
+      url: https://raw.githubusercontent.com/caarlos0/.goreleaserfiles/main/build.yml
+  - from_url:
+      url: https://raw.githubusercontent.com/caarlos0/.goreleaserfiles/main/package.yml
+  - from_url:
+      url: https://raw.githubusercontent.com/caarlos0/.goreleaserfiles/main/release.yml
+
+furies:
+  - account: caarlos0
+
 builds:
 - main: ./cmd/clone-org
-  goarch:
-  - amd64
-  - arm64
-brews:
-- tap:
-    owner: caarlos0
-    name: homebrew-tap
-  homepage:  https://github.com/caarlos0/clone-org
-  description: Clone all repos of a GitHub user or organization.
-  folder: Formula
-nfpms:
-- maintainer: Carlos A Becker <pkg@carlosbecker.com>
-  description: Clone all repos of a GitHub user or organization.
-  license: MIT
-  formats:
-  - deb
-  - rpm
-  - apk
