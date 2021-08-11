@@ -26,8 +26,15 @@ var ErrClone = errors.New("git clone failed")
 // ErrCreateDir happens when we fail to create the target directory.
 var ErrCreateDir = errors.New("failed to create directory")
 
+var sem = make(chan bool, 20)
+
 // Clone a given repository into a given destination.
 func Clone(repo Repo, destination string) error {
+	sem <- true
+	defer func() {
+		<-sem
+	}()
+
 	// nolint: gosec
 	cmd := exec.Command(
 		"git", "clone", "--depth", "1", repo.URL,
