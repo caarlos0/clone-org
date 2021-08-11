@@ -45,6 +45,11 @@ func (m repoModel) Update(msg tea.Msg) (repoModel, tea.Cmd) {
 			m.cloning = false
 			log.Println("cloned", m.repo.Name)
 		}
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c", "q", "esc":
+			return m, tea.Quit
+		}
 	default:
 		var cmd tea.Cmd
 		m.spinner, cmd = m.spinner.Update(msg)
@@ -55,12 +60,19 @@ func (m repoModel) Update(msg tea.Msg) (repoModel, tea.Cmd) {
 
 func (m repoModel) View() string {
 	if m.err != nil {
-		return faint("[failed] ") + m.repo.Name + " " + redFaintForeground(strings.TrimSpace(m.err.Error()))
+		return secondaryForeground.Render("[failed] ") +
+			m.repo.Name +
+			" " +
+			errorFaintForeground.Render(strings.TrimSpace(m.err.Error()))
 	}
 	if m.cloning {
-		return faint("[cloning] ") + m.repo.Name + " " + boldSecondaryForeground(m.spinner.View())
+		return secondaryForeground.Render("[cloning] ") +
+			m.repo.Name +
+			" " +
+			primaryForegroundBold.Render(m.spinner.View())
 	}
-	return faint("[cloned] ") + m.repo.Name
+	return secondaryForeground.Render("[cloned] ") +
+		m.repo.Name
 }
 
 // msgs and cmds

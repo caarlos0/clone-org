@@ -45,7 +45,7 @@ func (m initialModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.err = msg.error
 		return m, nil
 	case gotRepoListMsg:
-		list := newCloneModel(msg.repos, m.destination, m.tui)
+		list := newCloneModel(msg.repos, m.org, m.destination, m.tui)
 		return list, list.Init()
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -62,7 +62,9 @@ func (m initialModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m initialModel) View() string {
 	if m.loading {
-		return boldPrimaryForeground(m.spinner.View()) + " Gathering repositories..." + singleOptionHelp("q", "quit")
+		return primaryForegroundBold.Render(m.spinner.View()) +
+			" Gathering repositories..." +
+			singleOptionHelp("q", "quit")
 	}
 	if m.err != nil {
 		return errorView("Error gathering the repositories: ", m.err)

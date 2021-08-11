@@ -2,8 +2,6 @@ package ui
 
 import (
 	"strings"
-
-	"github.com/muesli/termenv"
 )
 
 func singleOptionHelp(k, v string) string {
@@ -12,7 +10,7 @@ func singleOptionHelp(k, v string) string {
 	})
 }
 
-var separator = midGrayForeground(" • ")
+var separator = midGrayForeground.Render(" • ")
 
 func helpView(options []helpOption) string {
 	var lines []string
@@ -20,9 +18,15 @@ func helpView(options []helpOption) string {
 	var line []string
 	for i, help := range options {
 		if help.primary {
-			line = append(line, grayForeground(help.key)+" "+termenv.String(help.help).Foreground(secondary).Faint().String())
+			s := grayForeground.Render(help.key) +
+				" " +
+				secondaryForeground.Faint(true).Render((help.help))
+			line = append(line, s)
 		} else {
-			line = append(line, grayForeground(help.key)+" "+midGrayForeground(help.help))
+			s := grayForeground.Render(help.key) +
+				" " +
+				midGrayForeground.Render(help.help)
+			line = append(line, s)
 		}
 		// splits in rows of 3 options max
 		if (i+1)%3 == 0 {

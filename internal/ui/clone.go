@@ -7,13 +7,14 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-func newCloneModel(repos []cloneorg.Repo, destination string, tui bool) tea.Model {
+func newCloneModel(repos []cloneorg.Repo, org, destination string, tui bool) tea.Model {
 	var models []repoModel
 	for _, r := range repos {
 		models = append(models, newRepoView(r, destination))
 	}
 	return cloneModel{
 		repos:       models,
+		org:         org,
 		destination: destination,
 		tui:         tui,
 	}
@@ -23,6 +24,7 @@ func newCloneModel(repos []cloneorg.Repo, destination string, tui bool) tea.Mode
 // deleted if any, and see details on each of them.
 type cloneModel struct {
 	repos       []repoModel
+	org         string
 	destination string
 	done        bool
 	tui         bool
@@ -68,10 +70,16 @@ func (m cloneModel) View() string {
 	if m.done {
 		verb = "Cloned"
 	}
-	s := boldSecondaryForeground(fmt.Sprintf("%s %d repositories to %s ...\n\n", verb, len(m.repos), m.destination))
+	s := secondaryForeground.Render(fmt.Sprintf(
+		"%s %d repositories from %s to %s ...\n",
+		verb,
+		len(m.repos),
+		m.org,
+		m.destination,
+	))
 	for _, r := range m.repos {
-		s += r.View() + "\n"
+		s += "\n" + r.View()
 	}
 
-	return s + singleOptionHelp("q/esc", "quit")
+	return s + "\n" + singleOptionHelp("q/esc", "quit")
 }
