@@ -50,6 +50,12 @@ configurable.
 
 ## Install
 
+**go**:
+
+```sh
+go install -v github.com/caarlos0/clone-org/cmd/clone-org@latest
+```
+
 **homebrew**:
 
 ```sh
