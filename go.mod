@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/charmbracelet/bubbles v0.11.0
 	github.com/charmbracelet/bubbletea v0.21.0
-	github.com/charmbracelet/lipgloss v0.5.0
+	github.com/charmbracelet/lipgloss v0.6.0
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-github/v32 v32.1.0
 	github.com/mattn/go-isatty v0.0.14
