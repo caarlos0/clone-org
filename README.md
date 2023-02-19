@@ -3,11 +3,10 @@
 
 [![Release](https://img.shields.io/github/release/caarlos0/clone-org.svg?style=flat-square)](https://github.com/caarlos0/clone-org/releases/latest)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Travis](https://img.shields.io/travis/caarlos0/clone-org.svg?style=flat-square)](https://travis-ci.org/caarlos0/clone-org)
-<!-- [![Coverage Status](https://img.shields.io/coveralls/caarlos0/clone-org/master.svg?style=flat-square)](https://coveralls.io/github/caarlos0/clone-org?branch=master) -->
+[![Build
+status](https://img.shields.io/github/actions/workflow/status/caarlos0/clone-org/build.yml?style=for-the-badge&branch=main)](https://github.com/caarlos0/clone-org/actions?workflow=build)
 [![Go Report Card](https://goreportcard.com/badge/github.com/caarlos0/clone-org?style=flat-square)](https://goreportcard.com/report/github.com/caarlos0/clone-org)
 [![Godoc](https://godoc.org/github.com/caarlos0/clone-org?status.svg&style=flat-square)](http://godoc.org/github.com/caarlos0/clone-org)
-[![SayThanks.io](https://img.shields.io/badge/SayThanks.io-%E2%98%BC-1EAEDB.svg?style=flat-square)](https://saythanks.io/to/caarlos0)
 [![Powered By: GoReleaser](https://img.shields.io/badge/powered%20by-goreleaser-green.svg?style=flat-square)](https://github.com/goreleaser)
 
 
