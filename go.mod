@@ -9,7 +9,7 @@ require (
 	github.com/google/go-github/v32 v32.1.0
 	github.com/mattn/go-isatty v0.0.17
 	github.com/urfave/cli v1.22.12
-	golang.org/x/oauth2 v0.0.0-20210810183815-faf39c7919d5
+	golang.org/x/oauth2 v0.5.0
 )
 
 require (
@@ -33,5 +33,5 @@ require (
 	golang.org/x/term v0.5.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/protobuf v1.27.1 // indirect
+	google.golang.org/protobuf v1.28.0 // indirect
 )
