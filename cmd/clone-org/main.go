@@ -72,7 +72,7 @@ func main() {
 		}
 
 		p := tea.NewProgram(ui.NewInitialModel(token, org, destination, isTUI), opts...)
-		if err := p.Start(); err != nil {
+		if _, err := p.Run(); err != nil {
 			return cli.NewExitError(err.Error(), 1)
 		}
 		return nil

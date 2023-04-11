@@ -10,7 +10,7 @@ import (
 )
 
 func newRepoView(repo cloneorg.Repo, destination string) repoModel {
-	s := spinner.NewModel()
+	s := spinner.New()
 	s.Spinner = spinner.Points
 	return repoModel{
 		repo:        repo,
@@ -29,7 +29,7 @@ type repoModel struct {
 }
 
 func (m repoModel) Init() tea.Cmd {
-	return tea.Batch(cloneRepoCmd(m.repo, m.destination), spinner.Tick)
+	return tea.Batch(cloneRepoCmd(m.repo, m.destination), m.spinner.Tick)
 }
 
 func (m repoModel) Update(msg tea.Msg) (repoModel, tea.Cmd) {
@@ -50,12 +50,11 @@ func (m repoModel) Update(msg tea.Msg) (repoModel, tea.Cmd) {
 		case "ctrl+c", "q", "esc":
 			return m, tea.Quit
 		}
-	default:
-		var cmd tea.Cmd
-		m.spinner, cmd = m.spinner.Update(msg)
-		return m, cmd
 	}
-	return m, nil
+
+	var cmd tea.Cmd
+	m.spinner, cmd = m.spinner.Update(msg)
+	return m, cmd
 }
 
 func (m repoModel) View() string {

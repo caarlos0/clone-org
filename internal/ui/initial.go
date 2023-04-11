@@ -25,13 +25,14 @@ func NewInitialModel(token, org, destination string, tui bool) tea.Model {
 
 // InitialModel is the UI when the CLI starts, basically loading the repos.
 type initialModel struct {
-	err         error
-	spinner     spinner.Model
-	token       string
-	org         string
-	destination string
-	loading     bool
-	tui         bool
+	err           error
+	spinner       spinner.Model
+	token         string
+	org           string
+	destination   string
+	loading       bool
+	tui           bool
+	width, height int
 }
 
 func (m initialModel) Init() tea.Cmd {
@@ -40,12 +41,16 @@ func (m initialModel) Init() tea.Cmd {
 
 func (m initialModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.height = msg.Height
+		m.width = msg.Width
+		return m, nil
 	case errMsg:
 		m.loading = false
 		m.err = msg.error
 		return m, nil
 	case gotRepoListMsg:
-		list := newCloneModel(msg.repos, m.org, m.destination, m.tui)
+		list := newCloneModel(msg.repos, m.org, m.destination, m.tui, m.width, m.height)
 		return list, list.Init()
 	case tea.KeyMsg:
 		switch msg.String() {
