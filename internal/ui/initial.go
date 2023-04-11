@@ -10,7 +10,7 @@ import (
 
 // NewInitialModel creates a new InitialModel with required fields.
 func NewInitialModel(token, org, destination string, tui bool) tea.Model {
-	s := spinner.NewModel()
+	s := spinner.New()
 	s.Spinner = spinner.Jump
 
 	return initialModel{
@@ -35,7 +35,7 @@ type initialModel struct {
 }
 
 func (m initialModel) Init() tea.Cmd {
-	return tea.Batch(getReposCmd(m.token, m.org, m.destination), spinner.Tick)
+	return tea.Batch(getReposCmd(m.token, m.org, m.destination), m.spinner.Tick)
 }
 
 func (m initialModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {

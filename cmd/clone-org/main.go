@@ -66,15 +66,12 @@ func main() {
 		isTUI := isatty.IsTerminal(os.Stdout.Fd()) && !c.Bool("no-tui")
 		if isTUI {
 			log.SetOutput(io.Discard)
+			opts = append(opts, tea.WithAltScreen())
 		} else {
 			opts = []tea.ProgramOption{tea.WithoutRenderer()}
 		}
 
 		p := tea.NewProgram(ui.NewInitialModel(token, org, destination, isTUI), opts...)
-		if isTUI {
-			p.EnterAltScreen()
-			defer p.ExitAltScreen()
-		}
 		if err := p.Start(); err != nil {
 			return cli.NewExitError(err.Error(), 1)
 		}
