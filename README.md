@@ -60,6 +60,12 @@ go install -v github.com/caarlos0/clone-org/cmd/clone-org@latest
 brew install caarlos0/tap/clone-org
 ```
 
+**macports**:
+
+```sh
+sudo port install clone-org
+```
+
 **snap**:
 
 ```sh
