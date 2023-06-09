@@ -7,8 +7,8 @@ require (
 	github.com/charmbracelet/bubbletea v0.24.1
 	github.com/charmbracelet/lipgloss v0.7.1
 	github.com/google/go-github/v51 v51.0.0
-	github.com/mattn/go-isatty v0.0.18
-	github.com/urfave/cli v1.22.12
+	github.com/mattn/go-isatty v0.0.19
+	github.com/urfave/cli v1.22.13
 	golang.org/x/oauth2 v0.8.0
 )
 
