@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/charmbracelet/bubbles v0.19.0
-	github.com/charmbracelet/bubbletea v0.27.0
+	github.com/charmbracelet/bubbletea v1.0.0
 	github.com/charmbracelet/lipgloss v0.13.0
 	github.com/google/go-github/v51 v51.0.0
 	github.com/mattn/go-isatty v0.0.20
