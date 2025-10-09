@@ -9,7 +9,7 @@ require (
 	github.com/google/go-github/v51 v51.0.0
 	github.com/mattn/go-isatty v0.0.20
 	github.com/urfave/cli v1.22.17
-	golang.org/x/oauth2 v0.31.0
+	golang.org/x/oauth2 v0.32.0
 )
 
 require (
