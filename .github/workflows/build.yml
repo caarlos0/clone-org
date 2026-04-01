@@ -20,7 +20,7 @@ jobs:
           go-version: stable
       - run: go mod tidy
       - run: go test -v -failfast -race -coverpkg=./... -covermode=atomic -coverprofile=coverage.out ./... -timeout=2m
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.txt
