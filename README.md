@@ -100,8 +100,3 @@ Download the `.apk`, `.deb` or `.rpm` from the [releases page][releases] and ins
 Download the pre-compiled binaries from the [releases page][releases] or clone the repo build from source.
 
 [releases]: https://github.com/caarlos0/clone-org/releases
-
-
-## Stargazers over time
-
-[![Stargazers over time](https://starchart.cc/caarlos0/clone-org.svg)](https://starchart.cc/caarlos0/clone-org)
